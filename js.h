@@ -39,6 +39,7 @@
 #define SY_LINUX            0    /* any linux intel version                */
 #define SY_MAC              0    /* any macosx intel or powerpc version    */
 #define SY_MACPPC           0    /* macosx powerpc                         */
+#define SY_BSD64            0    /* freebsd 64 bit                         */
 
 #define SY_GETTOD           0    /* gettimeofday on unix                   */
 
@@ -158,6 +159,14 @@
 #endif
 #endif
 
+#if (SYS==SYS_FREEBSD)
+#undef SY_BSD64
+#define SY_BSD64 1
+#define _UNIX64 1
+#else
+#error "not freebsd!?"
+#endif
+
 /* _WIN64 defined by VC++ and _UNIX64 defined in makefile */
 #if defined(_WIN64) || defined(_UNIX64)
 #undef SY_64
@@ -165,12 +174,12 @@
 #endif
 
 #ifndef SYS     /* must be defined */
- error: "SYS must be defined"
+#error "SYS must be defined"
 #endif
 
-#if 1!=SY_WIN32+SY_LINUX+SY_MAC
- error: "one and only one of SY_WIN32, SY_LINUX, SY_MAC must be 1"
-#endif 
+#if 1!=SY_WIN32+SY_LINUX+SY_MAC+SY_BSD64
+#error "one and only one of SY_WIN32, SY_LINUX, SY_MAC, SY_BSD64 must be one"
+#endif
 
 #endif /* only include once */
 
