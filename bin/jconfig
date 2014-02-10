@@ -15,16 +15,17 @@ LIBREADLINE=""
 
 # if link fails install readline or try one of next lines
 # LIBREADLINE=" -ledit -lncurses "
-# LIBREADLINE=" -ledit64 -lnccurses " 
+# LIBREADLINE=" -ledit64 -lnccurses "
 
 # be careful with changes after this line
 
 un=`uname`
 lcun=$( echo "$un" | tr -s  '[:upper:]'  '[:lower:]' )
 
-if [ $un != Linux ] && [ $un != Darwin ]
+if [ $un != Linux ] && [ $un != Darwin ] && [ $un != FreeBSD ]
 then
-echo jconfig: not Linux or Darwin - changes to jconfig and other files required
+echo jconfig: unknown operating system.
+echo Changes to jconfig and other files required.
 exit 1
 fi
 
@@ -52,6 +53,13 @@ if [ $un == Darwin ]
 then
 SOLINK=" -dynamiclib -lm -ldl -o "
 SOSUFFIX=dylib
+fi
+
+if [ $un == FreeBSD ]
+then
+SOLINK=" -dynamiclib -lm -ldl -o "
+SOSUFFIX=so
+COMP="-Wno-parentheses -Wno-pointer-sign -Wno-implicit-function-declaration $COMP"
 fi
 
 if [ $bits == 32 ]
