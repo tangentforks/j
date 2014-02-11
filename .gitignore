@@ -1,2 +1,10 @@
 *.o
 *~
+
+#-- j-specific build artifacts ---
+defs/hostdefs.ijs
+defs/netdefs.ijs
+esum.txt
+j/system/defs
+js.h.gch
+make.txt
