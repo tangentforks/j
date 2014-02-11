@@ -52,7 +52,7 @@ typedef unsigned char       BYTE;
 
 #include "j.h"
 
-#define SY_UNIX64 (SY_64 && (SY_LINUX || SY_MAC))
+#define SY_UNIX64 (SY_64 && (SY_LINUX || SY_MAC || SY_BSD64))
 
 #if SY_WINCE
 #define HINSTANCE_ERROR 0
@@ -633,8 +633,8 @@ static B jtcdexec1(J jt,CCT*cc,C*zv0,C*wu,I wk,I wt,I wd){A*wv=(A*)wu,x,y,*zv;B 
 #if SY_MACPPC
 	         dd[dcnt++]=(float)*(D*)xv;
 #endif
-#if SY_64 && (SY_LINUX  || SY_MAC)
-			  {f=(float)*(D*)xv; dd[dcnt]=0; *(float*)(dd+dcnt++)=f;}
+#if SY_UNIX64
+            {f=(float)*(D*)xv; dd[dcnt]=0; *(float*)(dd+dcnt++)=f;}
 #else
              f=(float)*(D*)xv; *dv++=*(int*)&f;
 #endif
